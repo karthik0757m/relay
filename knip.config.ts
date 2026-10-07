@@ -17,6 +17,8 @@ const config: KnipConfig = {
     "apps/web/src/lib/session.ts": ["exports"],
     // lib/routes.ts _legacy sub-object — documents old paths, not called at runtime
     "apps/web/src/lib/routes.ts": ["exports"],
+    // ArrowLink — used inside ASG's landing feature (folder not visible to knip)
+    "apps/web/src/features/landing/parts/ArrowLink.tsx": ["exports"],
   },
 
   workspaces: {

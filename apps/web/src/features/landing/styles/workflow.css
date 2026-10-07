@@ -1,0 +1,111 @@
+/* Workflow section with three-card grid */
+
+.relay-landing .workflow-section {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 38px;
+  border-top: 1px solid var(--line);
+  padding-bottom: 156px;
+}
+
+.relay-landing .workflow-section .section-aside {
+  padding-top: calc(23px + 22px);
+}
+
+.relay-landing .workflow-content {
+  min-width: 0;
+}
+
+.relay-landing .workflow-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 23px;
+}
+
+.relay-landing .workflow-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  max-width: 300px;
+  padding-bottom: 4px;
+}
+
+.relay-landing .note-mark {
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--copper);
+}
+
+.relay-landing .workflow-note p {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--charcoal-muted);
+}
+
+.relay-landing .workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 56px;
+}
+
+.relay-landing .workflow-card {
+  display: flex;
+  flex-direction: column;
+  padding: 21px 22px 20px;
+  border: 1px solid var(--line);
+  background: rgba(251, 250, 245, 0.35);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.relay-landing .workflow-card:hover {
+  background: var(--paper);
+  border-color: rgba(198, 96, 62, 0.55);
+  transform: translateY(-4px);
+}
+
+.relay-landing .workflow-card-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--copper);
+}
+
+.relay-landing .workflow-card-top span {
+  font-family: var(--mono);
+  font-size: 9px;
+}
+
+.relay-landing .workflow-card-line {
+  height: 1px;
+  width: 100%;
+  background: var(--line);
+  margin: 0 0 22px;
+}
+
+.relay-landing .workflow-card-heading {
+  max-width: 255px;
+  margin-top: 40px;
+}
+
+.relay-landing .workflow-card-heading h3 {
+  margin: 13px 0 10px;
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.02;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  min-height: calc(2 * 1.02em);
+}
+
+.relay-landing .workflow-card-detail {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--charcoal-muted);
+}

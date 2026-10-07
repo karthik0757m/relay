@@ -11,11 +11,23 @@
     "lint": "pnpm --filter web lint",
     "test": "pnpm --filter web test",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
-    "unused": "knip"
+    "unused": "knip",
+    "test:visual": "pnpm test:visual:capture && pnpm test:visual:diff",
+    "test:visual:baseline": "playwright test capture-baseline.spec.ts",
+    "test:visual:capture": "playwright test compare.spec.ts",
+    "test:visual:diff": "tsx e2e/landing/compare.ts",
+    "test:a11y": "playwright test e2e/landing/a11y.spec.ts"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "1.49.1",
+    "@types/pngjs": "6.0.5",
     "knip": "^5.61.0",
-    "prettier": "^3.6.2"
+    "pixelmatch": "6.0.0",
+    "pngjs": "7.0.0",
+    "prettier": "^3.6.2",
+    "tsx": "4.19.2",
+    "wait-on": "8.0.1"
   },
   "packageManager": "pnpm@10.18.0",
   "msw": {

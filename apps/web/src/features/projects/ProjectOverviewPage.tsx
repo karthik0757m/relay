@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { useProject } from "@/lib/api/hooks";
+import { routes } from "@/lib/routes";
 import { ProjectActivityTimeline } from "./ProjectActivityTimeline";
 import { ProjectArchitectureCard } from "./ProjectArchitectureCard";
 import { ProjectHealthCard } from "./ProjectHealthCard";
@@ -14,6 +15,7 @@ import { SuggestedActionsCard } from "./SuggestedActionsCard";
 export function ProjectOverviewPage() {
   const { id } = useParams<{ id: string }>();
   const { data: project } = useProject(id);
+  const p = id ? routes.project(id) : null;
 
   const promptSuggestions = [
     "How does the caching algorithm compute hash keys?",
@@ -21,87 +23,95 @@ export function ProjectOverviewPage() {
     "Explain package DAG resolution during build.",
   ];
 
-  // ProjectGuard handles loading, error, and not-found states
   return (
     <ProjectGuard>
-      {project && (
+      {project && p && (
         <div className="space-y-8">
-          {/* Project Header Banner */}
+          {/* Hero / sync status */}
           <ProjectHero project={project} />
 
-          {/* Project Key Metrics */}
+          {/* Key metrics — counts link to relevant list pages */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard
-              label="Total Commits"
-              value={project.stats.commits.toLocaleString()}
-              accent="git"
-            />
-            <StatCard
-              label="Pull Requests"
-              value={project.stats.pullRequests.toLocaleString()}
-            />
-            <StatCard
-              label="Active Issues"
-              value={project.stats.issues.toLocaleString()}
-            />
-            <StatCard
-              label="Releases"
-              value={project.stats.releases.toLocaleString()}
-            />
+            <Link to={p.commits()} aria-label={`${project.stats.commits.toLocaleString()} commits`}>
+              <StatCard
+                label="Total Commits"
+                value={project.stats.commits.toLocaleString()}
+                className="hover:border-copper/60 transition cursor-pointer"
+              />
+            </Link>
+            <Link to={p.pulls()} aria-label={`${project.stats.pullRequests.toLocaleString()} pull requests`}>
+              <StatCard
+                label="Pull Requests"
+                value={project.stats.pullRequests.toLocaleString()}
+                className="hover:border-copper/60 transition cursor-pointer"
+              />
+            </Link>
+            <Link to={p.issues()} aria-label={`${project.stats.issues.toLocaleString()} issues`}>
+              <StatCard
+                label="Active Issues"
+                value={project.stats.issues.toLocaleString()}
+                className="hover:border-copper/60 transition cursor-pointer"
+              />
+            </Link>
+            <Link to={p.releases()} aria-label={`${project.stats.releases.toLocaleString()} releases`}>
+              <StatCard
+                label="Releases"
+                value={project.stats.releases.toLocaleString()}
+                className="hover:border-copper/60 transition cursor-pointer"
+              />
+            </Link>
           </div>
 
-          {/* Quick Grounded AI Query Bar */}
+          {/* Ask AI card */}
           <Card className="border-border bg-gradient-to-r from-surface-accent via-surface-accent to-surface p-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-copper" />
+                  <Sparkles className="h-4 w-4 text-copper" aria-hidden="true" />
                   <h3 className="font-serif text-lg font-normal text-paper">
                     Ask Relay about {project.name}
                   </h3>
                 </div>
                 <p className="text-xs text-text-muted">
-                  Every answer is grounded in AST nodes, source files, and commit
-                  history with line citations.
+                  Every answer cites its sources — source files, commits, and
+                  PRs with line references.
                 </p>
               </div>
-              <Link to={`/app/projects/${project.id}/ask`}>
+              <Link to={p.ask()}>
                 <Button
                   size="sm"
                   variant="primary"
                   className="bg-copper hover:bg-copper-dark text-paper text-xs gap-2 font-mono"
                 >
-                  <span>Start Agent Conversation</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  Start Conversation
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </Button>
               </Link>
             </div>
 
+            {/* Sample prompts */}
             <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-border/40 pt-4">
               <span className="text-[10px] font-mono uppercase text-text-muted">
-                Sample Inquiries:
+                Sample:
               </span>
               {promptSuggestions.map((prompt) => (
                 <Link
                   key={prompt}
-                  to={`/app/projects/${project.id}/ask?q=${encodeURIComponent(prompt)}`}
+                  to={`${p.ask()}?q=${encodeURIComponent(prompt)}`}
                   className="text-xs font-mono text-copper hover:underline bg-surface px-2.5 py-1 rounded border border-border/60"
                 >
-                  "{prompt}"
+                  &ldquo;{prompt}&rdquo;
                 </Link>
               ))}
             </div>
           </Card>
 
-          {/* Two-Column Layout: Main content + Sidebar */}
+          {/* Two-column layout */}
           <div className="grid gap-6 lg:grid-cols-3">
-            {/* Main Content - Left Column (2/3) */}
             <div className="lg:col-span-2 space-y-6">
               <ProjectArchitectureCard projectId={project.id} />
               <ProjectActivityTimeline projectId={project.id} />
             </div>
-
-            {/* Sidebar - Right Column (1/3) */}
             <div className="space-y-6">
               <ProjectHealthCard project={project} />
               <SuggestedActionsCard projectId={project.id} />

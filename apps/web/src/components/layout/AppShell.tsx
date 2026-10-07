@@ -46,7 +46,7 @@ export function AppShell({ children }: AppShellProps) {
     return <>{children}</>;
   }
 
-  // Standalone fallback — should only happen in unit tests or storybook.
+  // Standalone fallback — only reached in unit tests or storybook.
   return (
     <ShellMountedContext.Provider value={true}>
       {children}

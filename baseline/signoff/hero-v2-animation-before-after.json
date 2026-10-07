@@ -1,0 +1,229 @@
+{
+  "before": {
+    "dash": {
+      "name": "dash",
+      "duration": "18s",
+      "timing": "linear",
+      "delay": "0s",
+      "iteration": "infinite"
+    },
+    "pulse": {
+      "name": "pulse",
+      "duration": "2.3s",
+      "timing": "ease-in-out",
+      "delay": "0s",
+      "iteration": "infinite"
+    },
+    "float": {
+      "name": "float-card",
+      "duration": "6s",
+      "timing": "ease-in-out",
+      "delay": "0s",
+      "iteration": "infinite"
+    },
+    "revealRight": {
+      "name": "reveal-up",
+      "duration": "0.7s",
+      "timing": "ease",
+      "delay": "0.12s",
+      "iteration": "1"
+    }
+  },
+  "after": {
+    "dash": {
+      "name": "dash",
+      "duration": "18s",
+      "timing": "linear",
+      "delay": "0s",
+      "iteration": "infinite",
+      "playState": "running"
+    },
+    "pulse": {
+      "name": "pulse",
+      "duration": "2.3s",
+      "timing": "ease-in-out",
+      "delay": "0s",
+      "iteration": "infinite",
+      "playState": "running"
+    },
+    "float": {
+      "name": "float-card",
+      "duration": "6s",
+      "timing": "ease-in-out",
+      "delay": "0s",
+      "iteration": "infinite",
+      "playState": "running"
+    },
+    "revealRight": {
+      "name": "reveal-up",
+      "duration": "0.7s",
+      "timing": "ease",
+      "delay": "0.12s",
+      "iteration": "1",
+      "playState": "running"
+    },
+    "dashOffset": "-56.5165px",
+    "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+    "pulseTime": 7266.401000003703,
+    "cardY": 344.8630676269531,
+    "visiblePathAnimations": 1,
+    "hiddenPathAnimations": 0
+  },
+  "samples": [
+    {
+      "dashOffset": "-4.66641px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 347.3836975097656
+    },
+    {
+      "dashOffset": "-6.35159px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 345.8628234863281
+    },
+    {
+      "dashOffset": "-8.55581px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 345.2723083496094
+    },
+    {
+      "dashOffset": "-10.24px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 344.7333984375
+    },
+    {
+      "dashOffset": "-12.0548px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 344.1121826171875
+    },
+    {
+      "dashOffset": "-13.74px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 343.545166015625
+    },
+    {
+      "dashOffset": "-15.4254px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 343.03094482421875
+    },
+    {
+      "dashOffset": "-17.1103px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 342.60107421875
+    },
+    {
+      "dashOffset": "-18.9254px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 342.25213623046875
+    },
+    {
+      "dashOffset": "-20.6106px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 342.0395202636719
+    },
+    {
+      "dashOffset": "-22.1651px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 341.9360656738281
+    },
+    {
+      "dashOffset": "-23.8511px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 341.9178771972656
+    },
+    {
+      "dashOffset": "-25.5357px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 341.9952392578125
+    },
+    {
+      "dashOffset": "-27.2212px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 342.1750793457031
+    },
+    {
+      "dashOffset": "-29.1649px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 342.5154113769531
+    },
+    {
+      "dashOffset": "-30.9802px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 342.95819091796875
+    },
+    {
+      "dashOffset": "-32.6649px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 343.46087646484375
+    },
+    {
+      "dashOffset": "-34.4802px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 344.0669250488281
+    },
+    {
+      "dashOffset": "-36.1654px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 344.6453552246094
+    },
+    {
+      "dashOffset": "-37.8503px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 345.1929626464844
+    },
+    {
+      "dashOffset": "-39.5352px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 345.6717834472656
+    },
+    {
+      "dashOffset": "-41.2207px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.0567321777344
+    },
+    {
+      "dashOffset": "-42.9059px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.3359680175781
+    },
+    {
+      "dashOffset": "-44.8503px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.5254211425781
+    },
+    {
+      "dashOffset": "-46.535px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.5804748535156
+    },
+    {
+      "dashOffset": "-48.0908px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.5469970703125
+    },
+    {
+      "dashOffset": "-49.7762px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.4150390625
+    },
+    {
+      "dashOffset": "-51.4606px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 346.17755126953125
+    },
+    {
+      "dashOffset": "-53.2757px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 345.80194091796875
+    },
+    {
+      "dashOffset": "-54.8315px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 345.3879699707031
+    },
+    {
+      "dashOffset": "-56.5165px",
+      "pulseShadow": "rgba(157, 187, 160, 0.25) 0px 0px 0px 3px",
+      "cardY": 344.8630676269531
+    }
+  ]
+}

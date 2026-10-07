@@ -10,7 +10,7 @@ jobs:
   ci:
     name: CI
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,12 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '10.18.0'
-          
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
@@ -56,3 +56,69 @@ jobs:
 
       - name: Check unused exports (non-blocking)
         run: NODE_OPTIONS=--max-old-space-size=4096 pnpm unused || true
+
+  visual:
+    name: Visual regression
+    # The committed golden PNGs were captured on Windows. Keep the capture OS
+    # aligned so platform fonts do not create false visual regressions.
+    runs-on: windows-latest
+    needs: ci
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '10.18.0'
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install chromium
+
+      - name: Build app
+        run: pnpm build
+
+      - name: Start preview server
+        run: |
+          pnpm preview &
+          npx wait-on http://localhost:4173 --timeout 30000
+
+      - name: Capture current screenshots
+        run: pnpm test:visual:capture
+
+      - name: Diff against golden baseline
+        run: pnpm test:visual:diff
+
+      - name: Upload diff images
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff-${{ github.run_id }}
+          path: baseline/diff/
+          retention-days: 14
