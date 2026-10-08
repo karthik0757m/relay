@@ -1,38 +1,22 @@
-import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api/client";
 import { queryKeys } from "@/lib/api/query-keys";
-import { useSyncStatus } from "@/lib/api/hooks";
 import type { SyncJob } from "@/lib/api/types";
 
-/** Terminal states — polling stops when job reaches one of these. */
-const TERMINAL: ReadonlySet<SyncJob["status"]> = new Set(["succeeded", "failed"]);
-
 /**
- * useSyncPolling — polls GET /projects/:id/sync while the job is active.
- *
- * Uses TanStack Query's `refetchInterval` (no manual setInterval).
- * When sync succeeds, invalidates the project detail so health / status
- * stay fresh without a page reload.
+ * Polls sync job status with automatic stop on terminal states
  */
-export function useSyncPolling(projectId?: string) {
-  const queryClient = useQueryClient();
-
-  const query = useSyncStatus(projectId, {
-    refetchInterval: (q) => {
-      const data = q.state.data as SyncJob | undefined;
-      if (!data || TERMINAL.has(data.status)) return false;
-      return 1500;
+export function useSyncPolling(projectId: string, enabled = true) {
+  return useQuery({
+    queryKey: queryKeys.projects.sync(projectId),
+    queryFn: () => api.get<SyncJob>(`/projects/${projectId}/sync`),
+    enabled,
+    refetchInterval: (data) => {
+      // Stop polling on terminal states
+      if (!data?.state?.data) return false;
+      const status = data.state.data.status;
+      return status === "running" || status === "queued" ? 2000 : false;
     },
+    refetchIntervalInBackground: false,
   });
-
-  // Invalidate project detail when sync reaches "succeeded"
-  useEffect(() => {
-    if (query.data?.status === "succeeded" && projectId) {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.projects.detail(projectId),
-      });
-    }
-  }, [query.data?.status, projectId, queryClient]);
-
-  return query;
 }

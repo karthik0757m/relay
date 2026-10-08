@@ -1,7 +1,4 @@
-import { Link } from "react-router";
 import { StatCard } from "@/components/ui/stat-card";
-import { routes } from "@/lib/routes";
-import { deriveDashboardStats } from "./useDashboardStats";
 import type { Project } from "@/lib/api/types";
 
 interface DashboardStatsProps {
@@ -9,31 +6,35 @@ interface DashboardStatsProps {
 }
 
 export function DashboardStats({ projects }: DashboardStatsProps) {
-  const stats = deriveDashboardStats(projects);
+  // Derive stats from real project data
+  const totalProjects = projects.length;
+  const totalFiles = projects.reduce((sum, p) => sum + p.stats.files, 0);
+  const totalCommits = projects.reduce((sum, p) => sum + p.stats.commits, 0);
+  
+  // Healthy repos (succeeded sync status)
+  const healthyRepos = projects.filter(p => p.syncStatus === "succeeded").length;
+  const healthyPercentage = totalProjects > 0 
+    ? Math.round((healthyRepos / totalProjects) * 100) 
+    : 0;
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <Link to={routes.app.projects()} aria-label={`${stats.totalProjects} connected repositories`}>
-        <StatCard
-          label="Connected Repos"
-          value={stats.totalProjects}
-          className="hover:border-copper/60 transition cursor-pointer"
-        />
-      </Link>
       <StatCard
+        value={totalProjects.toLocaleString()}
+        label="Connected Repos"
+      />
+      <StatCard
+        value={`${healthyPercentage}%`}
+        label="Healthy Status"
+        accent={healthyPercentage >= 75 ? "✓" : healthyPercentage >= 50 ? "~" : "!"}
+      />
+      <StatCard
+        value={totalFiles.toLocaleString()}
+        label="Total Files"
+      />
+      <StatCard
+        value={totalCommits.toLocaleString()}
         label="Total Commits"
-        value={stats.totalCommits.toLocaleString()}
-        aria-label={`${stats.totalCommits.toLocaleString()} total commits across all repos`}
-      />
-      <StatCard
-        label="Open Pull Requests"
-        value={stats.totalPRs.toLocaleString()}
-        aria-label={`${stats.totalPRs.toLocaleString()} open pull requests across all repos`}
-      />
-      <StatCard
-        label="Active Issues"
-        value={stats.totalIssues.toLocaleString()}
-        aria-label={`${stats.totalIssues.toLocaleString()} open issues across all repos`}
       />
     </div>
   );

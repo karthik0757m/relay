@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../client";
 import { queryKeys } from "../query-keys";
-import type { Project } from "../types";
+import type { Project, SyncJob } from "../types";
 
 export function useProjects() {
   return useQuery({
@@ -38,6 +38,18 @@ export function useDeleteProject() {
     mutationFn: (id: string) => api.delete<undefined>(`/projects/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.projects.all });
+    },
+  });
+}
+
+export function useSyncProject() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => api.post<SyncJob>(`/projects/${id}/sync`),
+    onSuccess: (_, projectId) => {
+      // Invalidate project details and sync status
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects.detail(projectId) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects.sync(projectId) });
     },
   });
 }

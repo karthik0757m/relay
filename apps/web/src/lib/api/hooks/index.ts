@@ -1,5 +1,5 @@
 export { useCurrentUser } from "./auth";
-export { useProjects, useProject, useCreateProject, useDeleteProject } from "./projects";
+export { useProjects, useProject, useCreateProject, useDeleteProject, useSyncProject } from "./projects";
 export {
   useProjectActivity,
 } from "./artifacts";

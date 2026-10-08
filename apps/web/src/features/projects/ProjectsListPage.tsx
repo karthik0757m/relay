@@ -198,7 +198,7 @@ export function ProjectsListPage() {
                       aria-label="Archive project (coming soon)"
                       disabled
                     >
-                      <Archive className="h-3.5 w-3.5" aria-hidden="true" />
+                      <Archive className="h-3.5 w-3.5" />
                     </button>
                     <button
                       type="button"
@@ -207,10 +207,9 @@ export function ProjectsListPage() {
                         setToDelete(project);
                       }}
                       className="text-text-muted hover:text-error transition p-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error"
-                      title="Delete project"
                       aria-label={`Delete ${project.fullName}`}
                     >
-                      <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+                      <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
                 </CardFooter>
@@ -230,22 +229,20 @@ export function ProjectsListPage() {
         )}
       </div>
 
+      {/* Confirm delete dialog */}
       <ConfirmDialog
         open={toDelete !== null}
         onClose={() => setToDelete(null)}
-        onConfirm={() => {
-          if (toDelete) {
-            deleteProject.mutate(toDelete.id, {
-              onSuccess: () => setToDelete(null),
-            });
-          }
+        title={`Delete ${toDelete?.fullName}?`}
+        description={`This will permanently remove ${toDelete?.fullName} from Relay. This action cannot be undone. Type "${toDelete?.name}" to confirm.`}
+        confirmText={toDelete?.name ?? ""}
+        onConfirm={async () => {
+          if (!toDelete) return;
+          await deleteProject.mutateAsync(toDelete.id);
+          setToDelete(null);
         }}
-        title={`Delete ${toDelete?.name ?? "project"}?`}
-        description="All indexed data will be permanently removed. This cannot be undone."
-        confirmText={toDelete?.name}
-        confirmLabel="Delete"
-        destructive
         loading={deleteProject.isPending}
+        destructive
       />
     </AppShell>
   );
